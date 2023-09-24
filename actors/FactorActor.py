@@ -13,7 +13,7 @@ from utils.tensor_function import matricize, ktensor
 
 from scipy.sparse import csr_matrix
 
-@ray.remote(num_cpus=1)
+@ray.remote(num_cpus=20)
 class FactorActor:
     def __init__(self, k1, Y, patsize, rows, cols, nn):
         print("init factors")

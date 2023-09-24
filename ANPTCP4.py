@@ -171,9 +171,11 @@ def test(Ob, KK, Y, rate, PN, R, s, maxIter, num):
         plt.show()
         M1 = M1 + mu * (Z - HT)
 
+        print("上传一些东西", time.ctime())
         M1_ref = ray.put(M1)
         X_ref = ray.put(Z)
-
+        ray.wait([M1_ref, X_ref], num_returns=2)
+        print("上传完成", time.ctime())
 
         mu = 1.01 * mu
 
