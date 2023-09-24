@@ -8,6 +8,7 @@ from scipy.sparse import csr_matrix
 class ParameterServerActor(object):
     def __init__(self, nn):
         self.HR_HSI = np.zeros(nn)
+        self.nn = nn
 
     def put_HR_HSI(self, *HSI_Piece):
         # print(HSI_Piece)
@@ -15,12 +16,13 @@ class ParameterServerActor(object):
         t1 = time.time()
         for hsi in HSI_Piece:
             temp = np.zeros(self.HR_HSI.shape)
+            print(self.HR_HSI.shape)
             for i in range(self.HR_HSI.shape[2]):
                 # print(hsi.data[i])
                 # print(hsi.col_indices)
                 # print(hsi.row_offset)
                 temp[:, :, i] = csr_matrix((hsi.data[i], hsi.col_indices,
-                                      hsi.row_offset)).toarray()
+                                      hsi.row_offset), shape=(self.nn[0], self.nn[1])).toarray()
             print("我在更新", time.ctime())
             self.HR_HSI += temp
         t2 = time.time()

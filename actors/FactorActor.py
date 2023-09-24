@@ -136,7 +136,7 @@ class FactorActor:
             factor = patch.factor
             cube = ktensor([factor.U1, factor.U2, np.dot(R, patch.factor.U3), factor.U4])
             err = lda * np.linalg.norm(cube - Ytt1)
-            # print(patch.Rank, err)
+            print(patch.Rank, err)
 
             # U1 = patch.factor.U1
             # U2 = patch.factor.U2
@@ -223,8 +223,6 @@ class FactorActor:
                 E_Img[row: patsize + row, col: patsize + col, :] = \
                     E_Img[row: patsize + row, col: patsize + col, :] + patches[:, :, :, ind_cur]
 
-
-
             curPatchlist.append(patch)
             # print("----end---")
         # print(len(curPatchlist))
@@ -239,6 +237,7 @@ class FactorActor:
         # csr_first = csr_matrix(E_Img[:, :, 0])
         #
         for i in range(nn[2]):
+            print(E_Img[:, :, i].shape)
             csr = csr_matrix(E_Img[:, :, i])
             sparseTensor.addIndices(csr.indices)
             sparseTensor.addOffset(csr.indptr)

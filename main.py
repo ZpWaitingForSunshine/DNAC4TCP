@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # read data 读取数据
     I_REF, MSI, HSI, R = readData('DC50')
 
-    PN = 46
+    PN = 300
     Rank = 1
     ratio = 5
     s = loads()
