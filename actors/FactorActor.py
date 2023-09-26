@@ -121,18 +121,21 @@ class FactorActor:
             patch.factor.U3 = np.dot(leftD, np.dot(t3, rightD))
 
             # U4
-            W4 = sl.khatri_rao(patch.factor.U3, patch.factor.U2)
-            W4 = sl.khatri_rao(W4, patch.factor.U1)
-            P4 = sl.khatri_rao(np.dot(R, patch.factor.U3), patch.factor.U2)
-            P4 = sl.khatri_rao(P4, patch.factor.U1)
-            G4 = np.dot(patch.factor.U3.T, patch.factor.U3) * np.dot(patch.factor.U2.T, patch.factor.U2) \
-                 * np.dot(patch.factor.U1.T, patch.factor.U1)
-            P4TP4 = np.dot(np.dot(R, patch.factor.U3).T, np.dot(R, patch.factor.U3)) * np.dot(patch.factor.U2.T,
-                                                                                              patch.factor.U2) \
-                    * np.dot(patch.factor.U1.T, patch.factor.U1)
-            t4 = mu * G4 + 2 * lda * P4TP4
-            patch.factor.U4 = np.dot(np.dot(MM2[3].T, W4) + 2 * lda * np.dot(YSO1[3].T, P4) + mu * np.dot(SO1[3].T, W4),
-                                     np.linalg.inv(t4))
+            try:
+                W4 = sl.khatri_rao(patch.factor.U3, patch.factor.U2)
+                W4 = sl.khatri_rao(W4, patch.factor.U1)
+                P4 = sl.khatri_rao(np.dot(R, patch.factor.U3), patch.factor.U2)
+                P4 = sl.khatri_rao(P4, patch.factor.U1)
+                G4 = np.dot(patch.factor.U3.T, patch.factor.U3) * np.dot(patch.factor.U2.T, patch.factor.U2) \
+                     * np.dot(patch.factor.U1.T, patch.factor.U1)
+                P4TP4 = np.dot(np.dot(R, patch.factor.U3).T, np.dot(R, patch.factor.U3)) * np.dot(patch.factor.U2.T,
+                                                                                                  patch.factor.U2) \
+                        * np.dot(patch.factor.U1.T, patch.factor.U1)
+                t4 = mu * G4 + 2 * lda * P4TP4
+                patch.factor.U4 = np.dot(np.dot(MM2[3].T, W4) + 2 * lda * np.dot(YSO1[3].T, P4) + mu * np.dot(SO1[3].T, W4),
+                                         np.linalg.pinv(t4))
+            except:
+                print("svd error")
             factor = patch.factor
             cube = ktensor([factor.U1, factor.U2, np.dot(R, patch.factor.U3), factor.U4])
             err = lda * np.linalg.norm(cube - Ytt1)
