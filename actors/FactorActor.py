@@ -207,7 +207,7 @@ class FactorActor:
                 cube = ktensor([U1, U2, np.dot(R, U3), U4])
                 err1 = lda * np.linalg.norm(cube - Ytt1)
 
-                if (np.abs(err - err1) < 0.8):
+                if (np.abs(err - err1) < 5 / 100 * np.sqrt(len(ind))):
                     print(patch.Rank, err)
                     break
                 err = err1
