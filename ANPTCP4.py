@@ -43,9 +43,6 @@ def test(Ob, KK, Y, rate, PN, R, s, maxIter, num):
     time_group = 0
     time_reduce = 0
 
-
-
-
     t_start = time.time()
     print("")
     max_HS = np.max(Ob)
