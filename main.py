@@ -22,7 +22,7 @@ if __name__ == '__main__':
     #          runtime_env={"working_dir": "./"})
     ray.init()
     # read data 读取数据
-    I_REF, MSI, HSI, R = readData('DC')
+    I_REF, MSI, HSI, R = readData('DC50')
 
     PN = 300
     Rank = 1
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     rate = 5
     maxIter = 10
-    num = 4
+    num = 1
 
     I_CTD = test(HSI, KK, MSI, rate, PN, R, s, maxIter, num)
 
