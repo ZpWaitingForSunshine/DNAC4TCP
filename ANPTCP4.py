@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 from actors.FactorActor import FactorActor
 from utils.nonlocal_function import find_min_indices, split_average, getW_Imge_Matrix
-from utils.tools import upsample, gaussian
+from utils.tools import upsample, gaussian, average_split_set
 from tasks.GroupTask import knn, partitions_group, cg
 from actors.ParameterServerActor import ParameterServerActor
 
@@ -17,22 +17,25 @@ def group(PN, num, rows, cols, patsize, Y_ref):
     indices = np.zeros((2, rows * cols)).astype('int')
     indices[0] = np.arange(rows * cols)
     indices[1] = 1000000
+
     groups_edges = split_average(indices[0, :], PN, num)
     indices_set = []
     # Y = ray.get(Y_ref)
     indices_set = []
-    for i in range(num - 1):
+    for i in range(int(np.ceil(rows * cols / PN))):
         indices_split_arrays = np.array_split(indices, num, axis=1)
         task_ids = [knn.remote(item, rows, cols, patsize, indices[0][0], Y_ref) for item in indices_split_arrays]
         indices_list = ray.get(task_ids)
         indices = np.concatenate(indices_list, axis=1)
-        min_indices = find_min_indices(indices, len(groups_edges[i]))
+        min_indices = find_min_indices(indices, PN)
         indices_set.append(indices[:, min_indices])
         indices = np.delete(indices, min_indices, axis=1)
     indices_set.append(indices)
+
+    groups = average_split_set(indices_set, num)
     # 创建任务
-    task_ids = [partitions_group.remote(item, rows, cols, patsize, Y_ref, PN) for item in indices_set]
-    groups = ray.get(task_ids)
+    # task_ids = [partitions_group.remote(item, rows, cols, patsize, Y_ref, PN) for item in indices_set]
+    # groups = ray.get(task_ids)
     return groups
 
 def test(Ob, KK, Y, rate, PN, R, s, maxIter, num):
@@ -60,7 +63,7 @@ def test(Ob, KK, Y, rate, PN, R, s, maxIter, num):
     tol = 1e-2
     mu = 1e-4
     lda = 100
-    maxIter = 10
+    maxIter = 1
     minIter = 1
     patsize = 5
     Pstep = 1
@@ -87,13 +90,13 @@ def test(Ob, KK, Y, rate, PN, R, s, maxIter, num):
 
     X_ref = ray.put(Ob)
 
-    if(os.path.exists("./k1")):
-        with open('./k1', 'rb') as f:
-            k1 = pickle.load(f)
-    else:
-        k1 = group(PN, num, rows, cols, patsize, Y_ref)
-        with open('./k1', 'wb') as file:
-            pickle.dump(k1, file)
+    # if(os.path.exists("./k1")):
+    #     with open('./k1', 'rb') as f:
+    #         k1 = pickle.load(f)
+    # else:
+    k1 = group(PN, num, rows, cols, patsize, Y_ref)
+    #     with open('./k1', 'wb') as file:
+    #         pickle.dump(k1, file)
 
             # K1 = ['sfsdfdf']
             #

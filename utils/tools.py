@@ -65,3 +65,15 @@ def myfun2(X, mu, rate, nn, s):
     return np.reshape(re, re.shape[0] * re.shape[1] * re.shape[2], order='F')
 
 
+def average_split_set(input_set, num_subsets):
+    # 将set转换为列表以便操作
+    elements = list(input_set)
+
+    # 计算每个子集应包含的元素数量
+    elements_per_subset = int(np.ceil(len(elements) / num_subsets))
+
+    # 使用列表切片将元素分配到子集中
+    subsets = [elements[i * elements_per_subset:(i + 1) * elements_per_subset] for i in range(num_subsets)]
+
+    return subsets
+
