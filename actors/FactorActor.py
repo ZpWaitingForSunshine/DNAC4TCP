@@ -248,7 +248,7 @@ class FactorActor:
         sparseTensor.addData(data)
         #
 
-        print("零占比：", 1 - np.count_nonzero(E_Img[:, :, 0]) / nn[0] / nn[1])
+
 
         # self.E_Img = E_Img
         # return E_Img
