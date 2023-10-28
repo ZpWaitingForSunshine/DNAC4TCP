@@ -30,7 +30,7 @@ def group(PN, num, rows, cols, patsize, Y_ref):
         min_indices = find_min_indices(indices, PN)
         indices_set.append(indices[0, min_indices])
         indices = np.delete(indices, min_indices, axis=1)
-    indices_set.append(indices[0, :])
+    # indices_set.append(indices[0, :])
 
     groups = average_split_set(indices_set, num)
     # 创建任务
@@ -63,7 +63,7 @@ def test(Ob, KK, Y, rate, PN, R, s, maxIter, num):
     tol = 1e-2
     mu = 1e-4
     lda = 100
-    maxIter = 1
+    maxIter = 10
     minIter = 1
     patsize = 5
     Pstep = 1

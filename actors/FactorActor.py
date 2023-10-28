@@ -12,7 +12,7 @@ from classes.Classes import Patch, Factor
 from utils.tensor_function import matricize, ktensor
 
 
-@ray.remote(num_cpus=20)
+@ray.remote(num_cpus=2)
 class FactorActor:
     def __init__(self, k1, Y, patsize, rows, cols, nn):
         print("init factors")

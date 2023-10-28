@@ -8,7 +8,7 @@ from utils.nonlocal_function import find_min_indices, knn2
 from utils.tools import calEuclidean, cgsolve2
 
 # Y_ref 是Y的内存对象
-@ray.remote(num_cpus=10)
+@ray.remote(num_cpus=1)
 def knn(indices, rows, cols, Pstepsize, index, Y):
     # print('knn+ =')
     indices_ = indices.copy().astype('float64')
@@ -38,7 +38,7 @@ def knn(indices, rows, cols, Pstepsize, index, Y):
     # print(indices_[1])
     return indices_
 
-@ray.remote(num_cpus=10)
+@ray.remote(num_cpus=1)
 def partitions_group(indices, rows, cols, patsize, Y, PN):
     indices_ = indices.copy()
     indices_[1] = sys.maxsize
@@ -52,7 +52,7 @@ def partitions_group(indices, rows, cols, patsize, Y, PN):
     indices_set.append(indices_[0])
     return indices_set
 
-@ray.remote(num_cpus=10)
+@ray.remote(num_cpus=1)
 def cg(indices, rr, mu, rate, s):
     print("分区开始运行CG")
     t1 = time.time()
