@@ -34,7 +34,7 @@ if __name__ == '__main__':
     KK = 80
 
     rate = 5
-    maxIter = 2
+    maxIter = 10
     num = 5
 
     I_CTD = test(HSI, KK, MSI, rate, PN, R, s, maxIter, num)

@@ -28,9 +28,9 @@ def group(PN, num, rows, cols, patsize, Y_ref):
         indices_list = ray.get(task_ids)
         indices = np.concatenate(indices_list, axis=1)
         min_indices = find_min_indices(indices, PN)
-        indices_set.append(indices[:, min_indices])
+        indices_set.append(indices[0, min_indices])
         indices = np.delete(indices, min_indices, axis=1)
-    indices_set.append(indices)
+    indices_set.append(indices[0, :])
 
     groups = average_split_set(indices_set, num)
     # 创建任务

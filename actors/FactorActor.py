@@ -22,7 +22,7 @@ class FactorActor:
         self.E_Img = np.zeros(nn)
 
         for i in range(len(k1)):
-            patch = Patch(k1[i].astype(int), 80, 0)
+            patch = Patch(k1[i].astype(int), 30, 0)
             patchList.append(patch)
 
         for patch in patchList:
