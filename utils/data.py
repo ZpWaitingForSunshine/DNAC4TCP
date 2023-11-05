@@ -7,7 +7,7 @@ from utils.tools import gaussian, downsample
 dir = "/data2/data/"
 system = platform.system()
 if system == "Windows":
-    dir = "C:/Users/admin/Desktop/DPN4CTCP/data/"
+    dir = "D:/博士生涯/云计算/我的论文/tgrs/DPN4CTCP/data/"
 # read data from /data
 def readData(filename):
     R = loadR()

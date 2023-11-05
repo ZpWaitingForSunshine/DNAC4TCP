@@ -137,81 +137,81 @@ class FactorActor:
             err = lda * np.linalg.norm(cube - Ytt1)
             # print(patch.Rank, err)
 
-            # U1 = patch.factor.U1
-            # U2 = patch.factor.U2
-            # U3 = patch.factor.U3
-            # U4 = patch.factor.U4
-            #
-            # for i in range(patch.Rank + 1, 100):
-            #     # rank 更新
-            #
-            #     new_column = np.random.random([U1.shape[0], 1])
-            #     U1 = np.concatenate((U1, new_column), axis=1)
-            #
-            #     new_column = np.random.random([U2.shape[0], 1])
-            #     U2 = np.concatenate((U2, new_column), axis=1)
-            #
-            #     new_column = np.random.random([U3.shape[0], 1])
-            #     U3 = np.concatenate((U3, new_column), axis=1)
-            #
-            #     new_column = np.random.random([U4.shape[0], 1])
-            #     U4 = np.concatenate((U4, new_column), axis=1)
-            #     #
-            #     # U1
-            #     W1 = sl.khatri_rao(U4, U3)
-            #     W1 = sl.khatri_rao(W1, U2)
-            #     P1 = sl.khatri_rao(U4, np.dot(R, U3))
-            #     P1 = sl.khatri_rao(P1, U2)
-            #
-            #     G1 = np.dot(U4.T, U4) * np.dot(U3.T, U3) * np.dot(U2.T, U2)
-            #     PTP = np.dot(U4.T, U4) * np.dot(np.dot(R, U3).T, np.dot(R, U3)) * np.dot(U2.T, U2)
-            #     t1 = mu * G1 + 2 * lda * PTP
-            #     # np.dot(patch.M2[0].T, W1)
-            #     U1 = np.dot(np.dot(MM2[0].T, W1) + 2 * lda * np.dot(YSO1[0].T, P1) +
-            #                 mu * np.dot(SO1[0].T, W1), np.linalg.inv(t1))
-            #
-            #     # U2
-            #     W2 = sl.khatri_rao(U4, U3)
-            #     W2 = sl.khatri_rao(W2, U1)
-            #     P2 = sl.khatri_rao(U4, np.dot(R, U3))
-            #     P2 = sl.khatri_rao(P2, U1)
-            #     G2 = np.dot(U4.T, U4) * np.dot(U3.T, U3) * np.dot(U1.T, U1)
-            #     P2TP2 = np.dot(U4.T, U4) * np.dot(np.dot(R, U3).T, np.dot(R, U3)) * np.dot(U1.T, U1)
-            #     t2 = mu * G2 + 2 * lda * P2TP2
-            #     U2 = np.dot(np.dot(MM2[1].T, W2) + 2 * lda * np.dot(YSO1[1].T, P2) + mu * np.dot(SO1[1].T, W2),
-            #                 np.linalg.inv(t2))
-            #
-            #     # U3
-            #     W3 = sl.khatri_rao(U4, U2)
-            #     W3 = sl.khatri_rao(W3, U1)
-            #     leftD = np.linalg.inv(2 * lda * np.dot(R.T, R) + mu * np.eye(R.shape[1]))
-            #     rightD = np.linalg.inv(np.dot(W3.T, W3))
-            #     t3 = np.dot(2 * lda * np.dot(R.T, YSO1[2].T) + mu * SO1[2].T, W3)
-            #     U3 = np.dot(leftD, np.dot(t3, rightD))
-            #
-            #     # U4
-            #     W4 = sl.khatri_rao(U3, U2)
-            #     W4 = sl.khatri_rao(W4, U1)
-            #     P4 = sl.khatri_rao(np.dot(R, U3), U2)
-            #     P4 = sl.khatri_rao(P4, U1)
-            #     G4 = np.dot(U3.T, U3) * np.dot(U2.T, U2) * np.dot(U1.T, U1)
-            #     P4TP4 = np.dot(np.dot(R, U3).T, np.dot(R, U3)) * np.dot(U2.T, U2) * np.dot(U1.T, U1)
-            #     t4 = mu * G4 + 2 * lda * P4TP4
-            #     U4 = np.dot(np.dot(MM2[3].T, W4) + 2 * lda * np.dot(YSO1[3].T, P4) + mu * np.dot(SO1[3].T, W4),
-            #                 np.linalg.inv(t4))
-            #
-            #     cube = ktensor([U1, U2, np.dot(R, U3), U4])
-            #     err1 = lda * np.linalg.norm(cube - Ytt1)
-            #
-            #     if (np.abs(err - err1) < 1):
-            #         print(patch.Rank, err)
-            #         break
-            #     err = err1
-            #     patch.Rank = patch.Rank + 1
-            # patch.factor.U1 = U1
-            # patch.factor.U2 = U2
-            # patch.factor.U3 = U3
-            # patch.factor.U4 = U4
+            U1 = patch.factor.U1
+            U2 = patch.factor.U2
+            U3 = patch.factor.U3
+            U4 = patch.factor.U4
+
+            for i in range(patch.Rank + 1, 100):
+                # rank 更新
+
+                new_column = np.random.random([U1.shape[0], 1])
+                U1 = np.concatenate((U1, new_column), axis=1)
+
+                new_column = np.random.random([U2.shape[0], 1])
+                U2 = np.concatenate((U2, new_column), axis=1)
+
+                new_column = np.random.random([U3.shape[0], 1])
+                U3 = np.concatenate((U3, new_column), axis=1)
+
+                new_column = np.random.random([U4.shape[0], 1])
+                U4 = np.concatenate((U4, new_column), axis=1)
+                #
+                # U1
+                W1 = sl.khatri_rao(U4, U3)
+                W1 = sl.khatri_rao(W1, U2)
+                P1 = sl.khatri_rao(U4, np.dot(R, U3))
+                P1 = sl.khatri_rao(P1, U2)
+
+                G1 = np.dot(U4.T, U4) * np.dot(U3.T, U3) * np.dot(U2.T, U2)
+                PTP = np.dot(U4.T, U4) * np.dot(np.dot(R, U3).T, np.dot(R, U3)) * np.dot(U2.T, U2)
+                t1 = mu * G1 + 2 * lda * PTP
+                # np.dot(patch.M2[0].T, W1)
+                U1 = np.dot(np.dot(MM2[0].T, W1) + 2 * lda * np.dot(YSO1[0].T, P1) +
+                            mu * np.dot(SO1[0].T, W1), np.linalg.inv(t1))
+
+                # U2
+                W2 = sl.khatri_rao(U4, U3)
+                W2 = sl.khatri_rao(W2, U1)
+                P2 = sl.khatri_rao(U4, np.dot(R, U3))
+                P2 = sl.khatri_rao(P2, U1)
+                G2 = np.dot(U4.T, U4) * np.dot(U3.T, U3) * np.dot(U1.T, U1)
+                P2TP2 = np.dot(U4.T, U4) * np.dot(np.dot(R, U3).T, np.dot(R, U3)) * np.dot(U1.T, U1)
+                t2 = mu * G2 + 2 * lda * P2TP2
+                U2 = np.dot(np.dot(MM2[1].T, W2) + 2 * lda * np.dot(YSO1[1].T, P2) + mu * np.dot(SO1[1].T, W2),
+                            np.linalg.inv(t2))
+
+                # U3
+                W3 = sl.khatri_rao(U4, U2)
+                W3 = sl.khatri_rao(W3, U1)
+                leftD = np.linalg.inv(2 * lda * np.dot(R.T, R) + mu * np.eye(R.shape[1]))
+                rightD = np.linalg.inv(np.dot(W3.T, W3))
+                t3 = np.dot(2 * lda * np.dot(R.T, YSO1[2].T) + mu * SO1[2].T, W3)
+                U3 = np.dot(leftD, np.dot(t3, rightD))
+
+                # U4
+                W4 = sl.khatri_rao(U3, U2)
+                W4 = sl.khatri_rao(W4, U1)
+                P4 = sl.khatri_rao(np.dot(R, U3), U2)
+                P4 = sl.khatri_rao(P4, U1)
+                G4 = np.dot(U3.T, U3) * np.dot(U2.T, U2) * np.dot(U1.T, U1)
+                P4TP4 = np.dot(np.dot(R, U3).T, np.dot(R, U3)) * np.dot(U2.T, U2) * np.dot(U1.T, U1)
+                t4 = mu * G4 + 2 * lda * P4TP4
+                U4 = np.dot(np.dot(MM2[3].T, W4) + 2 * lda * np.dot(YSO1[3].T, P4) + mu * np.dot(SO1[3].T, W4),
+                            np.linalg.inv(t4))
+
+                cube = ktensor([U1, U2, np.dot(R, U3), U4])
+                err1 = lda * np.linalg.norm(cube - Ytt1)
+
+                if (np.abs(err - err1) <  5 / 100 * np.sqrt(len(ind))):
+                    print(patch.Rank, err)
+                    break
+                err = err1
+                patch.Rank = patch.Rank + 1
+            patch.factor.U1 = U1
+            patch.factor.U2 = U2
+            patch.factor.U3 = U3
+            patch.factor.U4 = U4
             factor = patch.factor
             patches = ktensor([factor.U2, factor.U1, factor.U3, factor.U4])
             for ind_cur, index in enumerate(indices):
