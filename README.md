@@ -1,2 +1,2 @@
-# ray_fusion
-distributed non-local tensor-based fusion for hyperspectral images in ray
+# DNAC4TCP
+Unified Cloud-Based Framework for Hyperspectral and Multispectral Image Fusion Incorporating Non-local Principles and Tensor Decomposition in ray
